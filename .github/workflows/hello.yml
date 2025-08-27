@@ -15,6 +15,10 @@ jobs:
     - name: こんにちはメッセージ
       run: echo "こんにちは！"
       
+  additional-message:
+    runs-on: ubuntu-latest
+    
+    steps:
     - name: 追加のメッセージ
       run: |
         echo "GitHub Actions から挨拶だよ"
