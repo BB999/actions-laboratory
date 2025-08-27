@@ -8,18 +8,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  hello:
+  hello-1:
     runs-on: ubuntu-latest
     
     steps:
-    - name: こんにちはメッセージ
+    - name: メッセージ1
       run: echo "こんにちは！"
       
-  additional-message:
+  hello-2:
     runs-on: ubuntu-latest
     
     steps:
-    - name: 追加のメッセージ
-      run: |
-        echo "GitHub Actions から挨拶だよ"
-        echo "今日は良い日だね"
+    - name: メッセージ2
+      run: echo "GitHub Actions から挨拶だよ"
+      
+  hello-3:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: メッセージ3
+      run: echo "今日は良い日だね"
