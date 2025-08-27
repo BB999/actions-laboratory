@@ -1,0 +1,21 @@
+name: こんにちはワークフロー
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: こんにちはメッセージ
+      run: echo "こんにちは！"
+      
+    - name: 追加のメッセージ
+      run: |
+        echo "GitHub Actions から挨拶だよ"
+        echo "今日は良い日だね"
