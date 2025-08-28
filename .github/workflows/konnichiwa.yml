@@ -5,6 +5,7 @@ on:
     workflows: ["初期ワークフロー"]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   konnichiwa:

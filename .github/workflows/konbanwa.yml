@@ -2,9 +2,10 @@ name: こんばんわワークフロー
 
 on:
   workflow_run:
-    workflows: ["おはようワークフロー"]
+    workflows: ["初期ワークフロー"]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   konbanwa:

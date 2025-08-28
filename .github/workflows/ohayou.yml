@@ -2,9 +2,10 @@ name: おはようワークフロー
 
 on:
   workflow_run:
-    workflows: ["こんにちはワークフロー"]
+    workflows: ["初期ワークフロー"]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   ohayou:
