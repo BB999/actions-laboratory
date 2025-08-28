@@ -14,3 +14,27 @@ jobs:
     steps:
     - name: 今日はワークフロー
       run: echo "今日はワークフローでこんにちはをログに出力するよ"
+      
+  konnichiwa:
+    runs-on: ubuntu-latest
+    needs: greeting-today
+    
+    steps:
+    - name: こんにちはメッセージ
+      run: echo "こんにちは"
+      
+  ohayou:
+    runs-on: ubuntu-latest
+    needs: konnichiwa
+    
+    steps:
+    - name: おはようメッセージ
+      run: echo "おはよう"
+      
+  konbanwa:
+    runs-on: ubuntu-latest
+    needs: ohayou
+    
+    steps:
+    - name: こんばんわメッセージ
+      run: echo "こんばんわ"
