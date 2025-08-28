@@ -1,0 +1,15 @@
+name: こんばんわワークフロー
+
+on:
+  workflow_run:
+    workflows: ["こんにちはワークフロー"]
+    types:
+      - completed
+
+jobs:
+  konbanwa:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: こんばんわメッセージ
+      run: echo "こんばんわ"
