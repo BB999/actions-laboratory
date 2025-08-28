@@ -2,7 +2,7 @@ name: こんにちはワークフロー
 
 on:
   workflow_run:
-    workflows: ["こんにちはワークフロー"]
+    workflows: ["初期ワークフロー"]
     types:
       - completed
 
