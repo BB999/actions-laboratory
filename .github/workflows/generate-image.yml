@@ -24,6 +24,9 @@ jobs:
         curl -X POST "https://api.nanobanana.com/v1/generate" \
           -H "Authorization: Bearer ${NANOBANANA_API_KEY}" \
           -H "Content-Type: application/json" \
+          -H "User-Agent: GitHub-Actions/1.0" \
+          --insecure \
+          --ssl-no-revoke \
           -d '{
             "prompt": "a beautiful sunset over mountains",
             "width": 1024,
