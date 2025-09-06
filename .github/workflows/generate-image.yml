@@ -1,0 +1,71 @@
+name: Generate Image with NanoBanana
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-image:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Generate Image
+      env:
+        NANOBANANA_API_KEY: ${{ secrets.NANOBANANA }}
+      run: |
+        # NanoBanana APIを使用して画像を生成
+        curl -X POST "https://api.nanobanana.com/v1/generate" \
+          -H "Authorization: Bearer ${NANOBANANA_API_KEY}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "prompt": "a beautiful sunset over mountains",
+            "width": 1024,
+            "height": 1024,
+            "num_inference_steps": 50,
+            "guidance_scale": 7.5
+          }' \
+          -o response.json
+        
+        # 生成された画像URLを取得
+        image_url=$(cat response.json | jq -r '.image_url')
+        echo "Generated image URL: $image_url"
+        
+        # 画像をダウンロード
+        if [ "$image_url" != "null" ] && [ "$image_url" != "" ]; then
+          curl -L "$image_url" -o generated_image.png
+          echo "✅ 画像の生成が完了しました"
+        else
+          echo "❌ 画像の生成に失敗しました"
+          cat response.json
+          exit 1
+        fi
+
+    - name: Upload Generated Image
+      uses: actions/upload-artifact@v4
+      if: success()
+      with:
+        name: generated-image-${{ github.run_number }}
+        path: generated_image.png
+        retention-days: 30
+
+    - name: Comment on commit (if triggered by push)
+      if: github.event_name == 'push' && success()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          if (fs.existsSync('generated_image.png')) {
+            github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+              body: `🎨 画像が生成されました！\n\nArtifactからダウンロードできます: [generated-image-${{ github.run_number }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`
+            });
+          }
